@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CalculadoraT {
+public class Calculadora {
 
     public static float sum(float a, float b) {return a + b;}
 
@@ -28,17 +28,9 @@ public class CalculadoraT {
         } else return true;
     }
 
-    public static boolean rebootValidation(String x){
-
-        if (!(x.contains("n")) && !(x.contains("s"))) {
-            System.out.println("Valor inválido! Digite s ou n");
-            return false;
-        } else return true;
-    }
-
     public static int readInteger(Scanner scanner) {
         for (;;) {
-            String linhaDigitada = scanner.nextLine();
+            String linhaDigitada = scanner.next();
             try {
                 return Integer.parseInt(linhaDigitada);
             } catch (NumberFormatException e) {
@@ -47,11 +39,19 @@ public class CalculadoraT {
         }
     }
 
-    public static boolean reboot(String x){return x.contains("s");}
-
-    public static void querFazerOutraOperacao () {System.out.print("Voce quer fazer outra operação? ");}
-
     public static void thanks() {System.out.print("Obrigado por usar a calculadora!\nAté a próxima!\nDesenvolvido por DevRubensV");}
+
+    public static boolean validString(Scanner scanner){
+        for(;;){
+            System.out.println("Voce quer fazer outra operação?");
+            String x = scanner.next().toLowerCase();
+            if(x.contains("sim")) {
+                return true;
+            } else if (x.contains("nao")){
+                return false;
+            } else System.out.println("Respota invalida! Responda com sim ou nao");
+        }
+    }
 
     public static void main(String[] args){
 
@@ -66,16 +66,17 @@ public class CalculadoraT {
 
         //Looping para operar enquanto operating = verdadeiro
         while (operating){
+            //Variável para sinalizar a operação que o usuário deseja
             int options;
+
             //Exibe o menu de opeções da calculadora
             //Recebe e valida a escolha do usuário para que seja numero inteiro
             //Valida a opção do usuário referente ao Menu de operações
             //Deve ser valor entre 0 e 4 (limites inclusos)
-            for (;;) {
+            do {
                 menu();
                 options = readInteger(scanner);
-                if (menuValidation(options)) {break;}
-            }
+            } while (!(menuValidation(options)));
 
             //Opção de saida a partir do menu
             if (options == 0) break;
@@ -94,18 +95,12 @@ public class CalculadoraT {
             else if (options == 3) System.out.println("O resultado da divisão é: " + division(num1, num2));
             else if (options == 4) System.out.println("O resultado da multiplicação é: " + multiplication(num1, num2));
 
-            //MELHORAR A PARTIR DAQUI
-            //Questiona se o usário quer fazer outra operação
-            querFazerOutraOperacao();
-            String aux = scanner.next().toLowerCase();
+            //Questiona se o usuario quer fazer outra operação
+            //E valida sua resposta como sim ou nao
+            boolean aux = validString(scanner);
 
-            //Valida a resposta do usuário. Deve ser s ou n
-            while (!rebootValidation(aux)) {
-                querFazerOutraOperacao();
-                aux = scanner.next().toLowerCase();
-            }
-            //Se resposta negativa, encerra o programa
-            if (!reboot(aux)) operating = false;
+            //Se resposta for nao, encerra o programa
+            if (!aux) operating = false;
 
         }
         //encerra a função scanner
