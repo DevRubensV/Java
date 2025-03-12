@@ -1,5 +1,5 @@
 # Java
-Codes in Java
+Códigos utilizando a linguagem JAVA.
 
 Este repositório é referente aos códigos criados em JAVA, de autoria própria.
 
