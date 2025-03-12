@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class CalculadoraTest {
+public class CalculadoraT {
 
     public static float sum(float a, float b) {return a + b;}
 
